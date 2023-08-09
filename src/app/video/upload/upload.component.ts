@@ -65,6 +65,9 @@ export class UploadComponent implements OnInit {
   }
 
   uploadFile() {
+    this.uploadForm.disable();
+
+
     this.showAlert = true;
     this.alertColor = 'blue';
     this.alertMsg = 'Please wait! We are uploading your video.';
@@ -105,6 +108,8 @@ export class UploadComponent implements OnInit {
 
       },
       error: (error) => {
+        this.uploadForm.enable();
+        
         this.alertColor = 'red';
         this.alertMsg = 'Upload failed! Please try again later.';
         this.inSubmission = true;
