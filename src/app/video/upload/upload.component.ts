@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app'
 import { ClipService } from 'src/app/services/clip.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',

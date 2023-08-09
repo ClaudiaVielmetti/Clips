@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/compat/firestore'
 import IClip from '../models/clip.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { switchMap } from 'rxjs';
+import { switchMap, map } from 'rxjs';
 import { of } from 'rxjs';
 
 
@@ -36,7 +36,8 @@ createClip(data: IClip): Promise<DocumentReference<IClip>> {
         const query = this.clipsCollection.ref.where('uid', '==', user.uid);
 
         return query.get();
-      })
+      }),
+      map(snapshot => (snapshot as QuerySnapshot<IClip>).docs)
     )
   }
 }
