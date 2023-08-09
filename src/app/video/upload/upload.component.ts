@@ -12,6 +12,10 @@ export class UploadComponent implements OnInit {
   isDragover = false;
   file: File | null = null;
   nextStep = false;
+  showAlert = false;
+  alertColor = 'blue';
+  alertMsg = 'Please wait! We are uploading your video.';
+  inSubmission = false;
 
   title = new FormControl('', {
     validators : [
@@ -46,6 +50,11 @@ export class UploadComponent implements OnInit {
   }
 
   uploadFile() {
+    this.showAlert = true;
+    this.alertColor = 'blue';
+    this.alertMsg = 'Please wait! We are uploading your video.';
+    this.inSubmission = true;
+
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`;
 
