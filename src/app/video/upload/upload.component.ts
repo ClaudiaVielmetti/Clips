@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { v4 as uuid } from 'uuid';
+import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload',
@@ -17,7 +18,7 @@ export class UploadComponent implements OnInit {
   alertMsg = 'Please wait! We are uploading your video.';
   inSubmission = false;
   percentage = 0;
-
+  showPercentage = false;
   title = new FormControl('', {
     validators : [
       Validators.required,
@@ -55,6 +56,7 @@ export class UploadComponent implements OnInit {
     this.alertColor = 'blue';
     this.alertMsg = 'Please wait! We are uploading your video.';
     this.inSubmission = true;
+    this.showPercentage = true;
 
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`;
@@ -63,6 +65,23 @@ export class UploadComponent implements OnInit {
 
     task.percentageChanges().subscribe(progress => {
       this.percentage = progress as number / 100;
+    });
+
+    task.snapshotChanges().pipe(last()
+    ).subscribe({
+      next: (snapshot) => {
+        this.alertColor = 'green';
+        this.alertMsg = 'Success! Your video is uploaded.';
+        this.showPercentage = false;
+
+      },
+      error: (error) => {
+        this.alertColor = 'red';
+        this.alertMsg = 'Upload failed! Please try again later.';
+        this.inSubmission = true;
+        this.showPercentage = false;
+        console.error(error)
+      }
     });
   }
 

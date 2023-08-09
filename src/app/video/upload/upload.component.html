@@ -26,7 +26,7 @@
     <ng-template #uploadFormCtr>
       <app-alert *ngIf="showAlert" [color]="alertColor">
         <p>{{ alertMsg }}</p>
-        <p>{{ percentage | percent }}</p>
+        <p *ngIf="showPercentage">{{ percentage | percent }}</p>
       </app-alert>
 
       <!-- Form -->
