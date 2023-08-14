@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { from } from 'rxjs';
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['/']);
 
